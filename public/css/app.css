@@ -243,12 +243,7 @@ hr {
   transition: 300ms;
 }
 
-.no-products-no-show{
-  display: none;
-}
-.no-products-show{
-  display: none;
-}
+
 .noproducts {
   text-align: center
 }
