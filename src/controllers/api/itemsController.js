@@ -1,4 +1,5 @@
 const { cart, Product, Item } = require("../../database/models");
+const { param } = require("../../routes/api/productsRouter");
 
 const itemsControllers = {
   addItem: (req, res) => {
@@ -54,6 +55,38 @@ const itemsControllers = {
       .catch((e) => {
         console.log("ERROR: ", e);
       });
+  },
+  removeItem: (req, res) => {
+    //enviar delete a la DB
+    Item.destroy({
+      where: {
+        id: req.body.id,
+        userId: req.body.userId,
+      },
+    }).then((item) => {
+      console.log(item);
+      if (item) {
+        res.status(200).json({
+          meta: {
+            status: 200,
+            message: "Cart Item was deleted",
+          },
+          data: {
+            item: {},
+          },
+        });
+      } else {
+        res.status(404).json({
+          meta: {
+            status: 404,
+            message: "Cart Item to delete not found",
+          },
+          data: {
+            item: {},
+          },
+        });
+      }
+    });
   },
 };
 
