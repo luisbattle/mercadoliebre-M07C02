@@ -9,4 +9,3 @@ node_modules
 src/jsonStyle/
 public/images/users/
 .vscode/
-.env
