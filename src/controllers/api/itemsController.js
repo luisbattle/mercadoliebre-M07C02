@@ -58,10 +58,11 @@ const itemsControllers = {
   },
   removeItem: (req, res) => {
     //enviar delete a la DB
+    console.log(req.body.itemId);
+
     Item.destroy({
       where: {
-        id: req.body.id,
-        userId: req.body.userId,
+        id: req.body.itemId,
       },
     }).then((item) => {
       console.log(item);

@@ -2,6 +2,8 @@
 <html lang="es">
 <!-- Include Head -->
 <%- include('../partials/head', {title: product.name, image: product.image}) %>
+<script defer src="/js/addItem.js"></script>
+
 <body>
 	<!-- Header -->
 	<%- include('../partials/headerNavbar') %>
@@ -17,7 +19,8 @@
 		<div class="product-detail">
 			<div class="row">
 				<div class="col-12 col-lg-8">
-					<img src="/images/products/<%= product.image %>" alt="<%= product.name %>" class="product-detail-img">
+					<img src="/images/products/<%= product.image %>" alt="<%= product.name %>"
+						class="product-detail-img">
 					<p class="product-detail-description">
 						<%= product.description %>
 					</p>
@@ -25,19 +28,19 @@
 				<div class="col-12 col-lg-4">
 					<article class="product-detail-info">
 						<h2 class="product-detail-title"><%= product.name %></h2>
-						<% if(product.discount > 0) { %> 
-							<p class="product-detail-price small">
-								<span>$<%= product.price %></span>
-								/
-								<b><%= product.discount %>% OFF</b>
-							</p>
-							<p class="product-detail-price">
-								$<%= helpers.trunc(product.price - product.price * product.discount / 100) %>
-							</p>
+						<% if(product.discount > 0) { %>
+						<p class="product-detail-price small">
+							<span>$<%= product.price %></span>
+							/
+							<b><%= product.discount %>% OFF</b>
+						</p>
+						<p class="product-detail-price">
+							$<%= helpers.trunc(product.price - product.price * product.discount / 100) %>
+						</p>
 						<% } else { %>
-							<p class="product-detail-price">
-								$<%= product.price; %>
-							</p>
+						<p class="product-detail-price">
+							$<%= product.price; %>
+						</p>
 						<% } %>
 
 						<ul class="actions-list">
@@ -51,23 +54,27 @@
 							</li>
 						</ul>
 
-						<% if(locals.user.id == product.userId){ %> 
-							<!-- Mostrar el formulario de edicion por GET -->
-							<a href="/products/<%= product.id %>/edit" class="action-button edit">EDITAR PRODUCTO</a>
+						<% if(locals.user.id == product.userId){ %>
+						<!-- Mostrar el formulario de edicion por GET -->
+						<a href="/products/<%= product.id %>/edit" class="action-button edit">EDITAR PRODUCTO</a>
 
-							<!-- Eliminar el producto -->
-							<form action="/products/<%= product.id %>?_method=DELETE" method="POST" style="display: inline-flex">
-								<button type="submit" class="action-button delete">ELIMINAR</button>
-							</form>
+						<!-- Eliminar el producto -->
+						<form action="/products/<%= product.id %>?_method=DELETE" method="POST"
+							style="display: inline-flex">
+							<button type="submit" class="action-button delete">ELIMINAR</button>
+						</form>
 						<% } else { %>
-							<form action="/users/addToCart" method="POST" style="display: inline-bock">
-								<label for="quantity" style="font-size: 14px;">Cantidad</label>
-								<input type="number" style="font-size: 14px;" id="quantity" name="quantity" value="1">
-								<p class="error"><%= typeof errors == 'undefined' ? '' : errors.quantity ? errors.quantity.msg : '' %></p>
-								<input type="hidden" name="productId" value="<%= product.id %>">
-								<button style="display: inline-block; width: 100%;" type="submit" class="mt-4 buy-now-button">AGREGAR AL CARRITO</button>
-							</form>
-							<hr>
+						<form action="/users/addToCart" method="POST" style="display: inline-bock">
+							<label for="quantity" style="font-size: 14px;">Cantidad</label>
+							<input type="number" style="font-size: 14px;" id="quantity" name="quantity" value="1">
+							<p class="error">
+								<%= typeof errors == 'undefined' ? '' : errors.quantity ? errors.quantity.msg : '' %>
+							</p>
+							<input type="hidden" name="productId" id="productId" value="<%= product.id %>">
+							<button id="addToCart" style="display: inline-block; width: 100%;" type="submit"
+								class="mt-4 buy-now-button">AGREGAR AL CARRITO</button>
+						</form>
+						<hr>
 						<% } %>
 					</article>
 				</div>
@@ -80,5 +87,6 @@
 	<%- include('../partials/footer') %>
 	<!-- /footer -->
 
-</body>	
+</body>
+
 </html>
